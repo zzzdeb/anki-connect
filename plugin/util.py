@@ -61,3 +61,63 @@ def setting(key):
         return aqt.mw.addonManager.getConfig(__name__).get(key, defaults[key])
     except:
         raise Exception('setting {} not found'.format(key))
+
+
+def window():
+    return aqt.mw
+
+
+def reviewer():
+    reviewer = window().reviewer
+    if reviewer is None:
+        raise Exception('reviewer is not available')
+    else:
+        return reviewer
+
+
+def collection():
+    collection = window().col
+    if collection is None:
+        raise Exception('collection is not available')
+    else:
+        return collection
+
+
+def decks():
+    decks = collection().decks
+    if decks is None:
+        raise Exception('decks are not available')
+    else:
+        return decks
+
+
+def scheduler():
+    scheduler = collection().sched
+    if scheduler is None:
+        raise Exception('scheduler is not available')
+    else:
+        return scheduler
+
+
+def database():
+    database = collection().db
+    if database is None:
+        raise Exception('database is not available')
+    else:
+        return database
+
+
+def media():
+    media = collection().media
+    if media is None:
+        raise Exception('media is not available')
+    else:
+        return media
+
+
+def startEditing():
+    window().requireReset()
+
+
+def stopEditing():
+    window().maybeReset()
