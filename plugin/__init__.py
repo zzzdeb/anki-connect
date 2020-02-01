@@ -34,7 +34,6 @@ import aqt
 
 from . import web, util
 
-
 #
 # AnkiConnect
 #
@@ -773,6 +772,8 @@ class AnkiConnect:
                     'question': card._getQA()['q'],
                     'answer': card._getQA()['a'],
                     'modelName': model['name'],
+                    'answerButtons': self.window().col.sched.answerButtons(card),
+                    'template':card.template(),
                     'deckName': self.deckNameFromId(card.did),
                     'css': model['css'],
                     'factor': card.factor,
@@ -790,6 +791,11 @@ class AnkiConnect:
 
         return result
 
+    @util.api()
+    def answerCard(self, cid, ease=2):
+        card = self.collection().getCard(cid)
+        card.startTimer()
+        self.window().col.sched.answerCard(card, ease)
 
     @util.api()
     def notesInfo(self, notes):
