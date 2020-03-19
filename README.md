@@ -1,3 +1,7 @@
+# This fork #
+1. Adds profile specific configuration
+2. Info about how many buttons to show for card
+
 # AnkiConnect #
 
 The AnkiConnect plugin enables external applications such as [Yomichan](https://foosoft.net/projects/yomichan/) to communicate with
