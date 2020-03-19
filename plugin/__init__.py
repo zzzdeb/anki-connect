@@ -56,9 +56,8 @@ class AnkiConnect:
             QMessageBox.critical(
                 self.window(),
                 'AnkiConnect',
-                'Failed to listen on port {}.\nMake sure it is available and is not in use.'.format(util.setting('webBindPort'))
+                'Failed to listen on port {}.\nMake sure it is available and is not in use.'.format(self.server.port)
             )
-
 
     def logEvent(self, name, data):
         if self.log is not None:
@@ -769,8 +768,8 @@ class AnkiConnect:
                     'cardId': card.id,
                     'fields': fields,
                     'fieldOrder': card.ord,
-                    'question': card._getQA()['q'],
-                    'answer': card._getQA()['a'],
+                    #  'question': card._getQA()['q'],
+                    #  'answer': card._getQA()['a'],
                     'modelName': model['name'],
                     'answerButtons': self.window().col.sched.answerButtons(card),
                     'template':card.template(),
@@ -1022,8 +1021,8 @@ class AnkiConnect:
                 'cardId': card.id,
                 'fields': fields,
                 'fieldOrder': card.ord,
-                'question': card._getQA()['q'],
-                'answer': card._getQA()['a'],
+                #  'question': card._getQA()['q'],
+                #  'answer': card._getQA()['a'],
                 'buttons': [b[0] for b in buttonList],
                 'nextReviews': [reviewer.mw.col.sched.nextIvlStr(reviewer.card, b[0], True) for b in buttonList],
                 'modelName': model['name'],
@@ -1140,3 +1139,6 @@ class AnkiConnect:
 #
 
 ac = AnkiConnect()
+
+from anki.hooks import addHook
+addHook("profileLoaded", ac.__init__)

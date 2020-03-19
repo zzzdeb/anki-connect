@@ -3,5 +3,13 @@
     "apiLogPath": null,
     "webBindAddress": "127.0.0.1",
     "webBindPort": 8765,
-    "webCorsOrigin": "http://localhost"
+    "webCorsOrigin": "http://localhost",
+    "profiles":{
+        "zzz": {
+            "webBindPort": 8766
+        },
+        "ninje": {
+            "webBindPort": 8767
+        }
+    }
 }
