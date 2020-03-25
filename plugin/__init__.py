@@ -764,6 +764,7 @@ class AnkiConnect:
                     name = info['name']
                     fields[name] = {'value': note.fields[order], 'order': order}
 
+                ansButtonLen = self.window().col.sched.answerButtons(card)
                 result.append({
                     'cardId': card.id,
                     'fields': fields,
@@ -771,7 +772,8 @@ class AnkiConnect:
                     #  'question': card._getQA()['q'],
                     #  'answer': card._getQA()['a'],
                     'modelName': model['name'],
-                    'answerButtons': self.window().col.sched.answerButtons(card),
+                    'answerButtons': ansButtonLen,
+                    'nextReviews': [self.window().col.sched.nextIvlStr(card, b, True) for b in range(1, ansButtonLen+1)],
                     'template':card.template(),
                     'deckName': self.deckNameFromId(card.did),
                     'css': model['css'],
@@ -779,7 +781,9 @@ class AnkiConnect:
                     #This factor is 10 times the ease percentage,
                     # so an ease of 310% would be reported as 3100
                     'interval': card.ivl,
-                    'note': card.nid
+                    'note': card.nid,
+                    'due':card.due,
+                    'dueDate': util.nextDue(card)
                 })
             except TypeError as e:
                 # Anki will give a TypeError if the card ID does not exist.

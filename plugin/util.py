@@ -18,6 +18,7 @@ import os
 import anki
 import anki.sync
 import aqt
+from anki.consts import *
 
 
 #
@@ -65,3 +66,22 @@ def setting(key):
         return config.get(key, defaults[key])
     except:
         raise Exception('setting {} not found'.format(key))
+
+import time
+from anki.rsbackend import TR
+from aqt.utils import tr
+def nextDue(c):
+    if c.odid:
+        return "(filtered)"
+    elif c.queue == QUEUE_TYPE_LRN:
+        date = c.due
+    elif c.queue == QUEUE_TYPE_NEW or c.type == CARD_TYPE_NEW:
+        return tr(TR.STATISTICS_DUE_FOR_NEW_CARD, number=c.due)
+    elif c.queue in (QUEUE_TYPE_REV, QUEUE_TYPE_DAY_LEARN_RELEARN) or (
+        c.type == CARD_TYPE_REV and c.queue < 0
+    ):
+        date = time.time() + ((c.due - aqt.mw.col.sched.today) * 86400)
+    else:
+        return ""
+    return time.strftime("%Y-%m-%d", time.localtime(date))
+
